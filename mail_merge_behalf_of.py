@@ -31,9 +31,12 @@ for message in messages:
 drafted = [email for email in drafts.Items]
 chunks = [drafted[x:x+30] for x in range(0, len(drafted), 30)]
 
-done = input('Switch Outlook to work online mode and enter YES or DONE: ')
+def go_online():
+    
+    done = input('Switch Outlook to work online mode and enter YES or DONE: ')
+    return done
 
-if done.upper() in ['YES', 'S', 'DONE']:
+if done.upper() in ['YES', 'S', 'DONE'] and ~ (namespace.Offline):
     for chunk in chunks:
         # iterate through each recipient in chunk and send mail
         for email in chunk:
@@ -41,7 +44,9 @@ if done.upper() in ['YES', 'S', 'DONE']:
             email.Send()
         # wait 60 seconds before sending next chunk
         sleep(60)
-
+else:
+    done = go_online()
+    
 lapse = datetime.now()-startTime
 print('Time taken: ',lapse)
 
