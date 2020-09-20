@@ -31,12 +31,18 @@ for message in messages:
 drafted = [email for email in drafts.Items]
 chunks = [drafted[x:x+30] for x in range(0, len(drafted), 30)]
 
+
 def go_online():
     
+    if namespace.Offline:
+        print('Outlook is currently set to "Work Offline"')
+        
     done = input('Switch Outlook to work online mode and enter YES or DONE: ')
     return done
 
+
 def send_chunks(done):
+    
     if done.upper() in ['YES', 'S', 'DONE'] and not (namespace.Offline):
         for chunk in chunks:
             # iterate through each recipient in chunk and send mail
@@ -49,6 +55,7 @@ def send_chunks(done):
         done = go_online()
         send_chunks(done)
         
+
 send_chunks('No')
 lapse = datetime.now()-startTime
 print('Time taken: ',lapse)
