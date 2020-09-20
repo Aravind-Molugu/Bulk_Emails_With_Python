@@ -37,7 +37,7 @@ def go_online():
     return done
 
 def send_chunks(done):
-    if done.upper() in ['YES', 'S', 'DONE'] and ~ (namespace.Offline):
+    if done.upper() in ['YES', 'S', 'DONE'] and not (namespace.Offline):
         for chunk in chunks:
             # iterate through each recipient in chunk and send mail
             for email in chunk:
