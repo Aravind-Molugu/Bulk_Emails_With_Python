@@ -36,17 +36,20 @@ def go_online():
     done = input('Switch Outlook to work online mode and enter YES or DONE: ')
     return done
 
-if done.upper() in ['YES', 'S', 'DONE'] and ~ (namespace.Offline):
-    for chunk in chunks:
-        # iterate through each recipient in chunk and send mail
-        for email in chunk:
-            email.Display()
-            email.Send()
-        # wait 60 seconds before sending next chunk
-        sleep(60)
-else:
-    done = go_online()
-    
+def send_chunks(done):
+    if done.upper() in ['YES', 'S', 'DONE'] and ~ (namespace.Offline):
+        for chunk in chunks:
+            # iterate through each recipient in chunk and send mail
+            for email in chunk:
+                email.Display()
+                email.Send()
+            # wait 60 seconds before sending next chunk
+            sleep(60)
+    else:
+        done = go_online()
+        send_chunks(done)
+        
+send_chunks('No')
 lapse = datetime.now()-startTime
 print('Time taken: ',lapse)
 
