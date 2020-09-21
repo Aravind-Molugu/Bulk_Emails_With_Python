@@ -4,6 +4,18 @@
 # This way you need not create your HTML template separately. You can apply all fonts and formatting on word and create your email body as required. 
 # This code will only manipulate the From / Sender's address and work around the email sending limits of 30 mails per minute.
 
+import sys
+import subprocess
+import pkg_resources
+
+required = {'win32com', 'datetime', 'time'}
+installed = {pkg.key for pkg in pkg_resources.working_set}
+missing = required - installed
+
+if missing:
+    python = sys.executable
+    subprocess.check_call([python, '-m', 'pip', 'install', *missing], stdout=subprocess.DEVNULL)
+
 from datetime import datetime
 import win32com.client as client
 from time import sleep
